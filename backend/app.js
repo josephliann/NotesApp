@@ -12,8 +12,22 @@ app.use(cors());
 console.log("MONGO_URL EXISTS:", !!process.env.MONGO_URL);
 mongoose
   .connect(process.env.MONGO_URL)
-  .then(() => console.log("DB connected"))
-  .catch((err) => console.log("MongoDB error:", err));
+  .then(() => {
+    console.log("DB connected");
+  })
+  .catch((err) => {
+    console.error("MongoDB connection failed:");
+    console.error(err);
+  });
+mongoose.connection.on("connected", () => {
+  console.log("Mongoose connected");
+});
+mongoose.connection.on("error", (err) => {
+  console.log("Mongoose connection error:", err);
+});
+mongoose.connection.on("disconnected", () => {
+  console.log("Mongoose disconnected");
+});
 
 app.post("/register", async (req, res) => {
   try {
