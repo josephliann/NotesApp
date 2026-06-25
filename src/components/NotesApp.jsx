@@ -16,7 +16,7 @@ function NotesApp() {
 
     async function fetchNotes() {
       try {
-        const res = await axios.get(`http://localhost:3000/notes/${userId}`);
+        const res = await axios.get(`https://notesapp-2kp0.onrender.com/notes/${userId}`);
         setNotes(res.data.notes);
       } catch (err) {
         console.log(err);
@@ -28,7 +28,7 @@ function NotesApp() {
 
   async function handleAddNotes(note) {
     try {
-      const res = await axios.post("http://localhost:3000/add-note", {
+      const res = await axios.post("https://notesapp-2kp0.onrender.com/add-note", {
         userId,
         title: note.title,
         content: note.content,
@@ -45,7 +45,7 @@ function NotesApp() {
 
   async function handleDelete(id) {
     try {
-      await axios.delete(`http://localhost:3000/delete-note/${id}`);
+      await axios.delete(`https://notesapp-2kp0.onrender.com/delete-note/${id}`);
 
       setNotes((prev) => {
         return prev.filter((item) => {
