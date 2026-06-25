@@ -32,6 +32,8 @@ function Register() {
         setMessage("Registration failed");
       }
     } catch (err) {
+      console.log(err.response?.data);
+      console.log(err.message);
       setIsError(true);
       setMessage("Server error");
     }
