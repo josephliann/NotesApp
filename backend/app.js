@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json()); 
 app.use(cors()); 
 
-
+console.log("MONGO_URL EXISTS:", !!process.env.MONGO_URL);
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => console.log("DB connected"))
@@ -17,16 +17,20 @@ mongoose
 
 app.post("/register", async (req, res) => {
   try {
-    console.log(req.body); 
-
+    console.log("REGISTER BODY:", req.body);
     const user = await usermodel.create(req.body);
-
-    res.send(user);
+    res.json({
+      success: true,
+      user,
+    });
   } catch (err) {
-    res.status(500).send(err);
+    console.error("REGISTER ERROR:", err);
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
   }
 });
-
 app.post("/add-note", async (req, res) => {
   try {
     const { userId, title, content } = req.body;
