@@ -20,7 +20,7 @@ function Register() {
 
   async function handleSubmit() {
     try {
-      const res = await axios.post("http://localhost:3000/register", user);
+      const res = await axios.post("https://notesapp-2kp0.onrender.com/register", user);
 
       if (res.data) {
         setIsError(false);
