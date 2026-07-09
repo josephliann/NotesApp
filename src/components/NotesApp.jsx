@@ -12,7 +12,7 @@ function NotesApp() {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
-  const API = "https://your-backend-url.onrender.com";
+  const API = "https://notesapp-2kp0.onrender.com";
 
   useEffect(() => {
     if (!token) {
