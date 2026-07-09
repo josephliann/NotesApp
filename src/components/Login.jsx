@@ -22,7 +22,7 @@ function Login() {
     try {
       setLoading(true);
 
-      const res = await axios.post("http://localhost:3000/login", user);
+      const res = await axios.post("https://notesapp-2kp0.onrender.com/login", user);
 
       if (res.data.success) {
         setIsError(false);
