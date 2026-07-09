@@ -81,17 +81,6 @@ body {
   margin-top: 30px;
 }
 
-.note-form {
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  width: 800px;
-  height: 200px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  display: flex;
-  flex-direction: column;
-}
-
 .note-form input {
   border: none;
   outline: none;
@@ -99,12 +88,16 @@ body {
   margin-bottom: 15px;
 }
 
-.note-form textarea {
-  border: none;
-  outline: none;
-  resize: none;
-  font-size: 15px;
-  margin-bottom: 60px;
+.note-form {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 800px;
+  height: auto;
+  min-height: 200px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
 }
 
 .note-form button {
