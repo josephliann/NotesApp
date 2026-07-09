@@ -13,6 +13,7 @@ function Register() {
 
   const [message, setMessage] = useState("");
   const [isError, setIsError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   function handleChange(e) {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -20,22 +21,27 @@ function Register() {
 
   async function handleSubmit() {
     try {
-      const res = await axios.post("https://notesapp-2kp0.onrender.com/register", user);
+      setLoading(true);
 
-      if (res.data) {
+      const res = await axios.post(
+        "https://your-backend-url.onrender.com/register",
+        user
+      );
+
+      if (res.data.success) {
         setIsError(false);
         setMessage("User created successfully");
 
         setTimeout(() => navigate("/"), 1000);
       } else {
         setIsError(true);
-        setMessage("Registration failed");
+        setMessage(res.data.message || "Registration failed");
       }
     } catch (err) {
-      console.log(err.response?.data);
-      console.log(err.message);
       setIsError(true);
       setMessage("Server error");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -66,14 +72,13 @@ function Register() {
       />
 
       <button className="register-btn" onClick={handleSubmit}>
-        Create Account
+        {loading ? "Please wait..." : "Create Account"}
       </button>
 
       <button className="back-btn" onClick={() => navigate("/")}>
         Back
       </button>
 
-      {/* MESSAGE */}
       {message && (
         <p className={`auth-msg ${isError ? "error" : "success"}`}>
           {message}
