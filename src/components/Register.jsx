@@ -24,7 +24,7 @@ function Register() {
       setLoading(true);
 
       const res = await axios.post(
-        "https://your-backend-url.onrender.com/register",
+        "https://notesapp-2kp0.onrender.com/register",
         user
       );
 
