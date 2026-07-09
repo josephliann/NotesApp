@@ -4,19 +4,30 @@ import Header from "./Header.jsx";
 import Footer from "./Footer.jsx";
 import Notes from "./Notes.jsx";
 import Create from "./Create.jsx";
+import { useNavigate } from "react-router-dom";
 
 function NotesApp() {
   const [notes, setNotes] = useState([]);
 
-  const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
+  const API = "https://your-backend-url.onrender.com";
 
   useEffect(() => {
-    if (!userId) return;
+    if (!token) {
+      navigate("/login");
+      return;
+    }
 
     async function fetchNotes() {
       try {
-        const res = await axios.get(`https://notesapp-2kp0.onrender.com/notes/${userId}`);
+        const res = await axios.get(`${API}/notes`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
         setNotes(res.data.notes);
       } catch (err) {
         console.log(err);
@@ -24,34 +35,40 @@ function NotesApp() {
     }
 
     fetchNotes();
-  }, [userId]);
+  }, [token, navigate]);
 
   async function handleAddNotes(note) {
     try {
-      const res = await axios.post("https://notesapp-2kp0.onrender.com/add-note", {
-        userId,
-        title: note.title,
-        content: note.content,
-      });
+      const res = await axios.post(
+        `${API}/add-note`,
+        {
+          title: note.title,
+          content: note.content,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-      setNotes((prev) => {
-        return [...prev, res.data.note];
-      });
+      setNotes((prev) => [...prev, res.data.note]);
     } catch (err) {
       console.log(err);
     }
   }
 
-
   async function handleDelete(id) {
     try {
-      await axios.delete(`https://notesapp-2kp0.onrender.com/delete-note/${id}`);
-
-      setNotes((prev) => {
-        return prev.filter((item) => {
-          return item._id.toString() !== id;
-        });
+      await axios.delete(`${API}/delete-note/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
+
+      setNotes((prev) =>
+        prev.filter((item) => item._id.toString() !== id)
+      );
     } catch (err) {
       console.log(err);
     }
@@ -62,9 +79,15 @@ function NotesApp() {
       <Header />
       <Create onAdd={handleAddNotes} />
 
-      {notes.map((noteItem) => {
-        return <Notes key={noteItem._id} id={noteItem._id} title={noteItem.title} content={noteItem.content} onDelete={handleDelete} />;
-      })}
+      {notes.map((noteItem) => (
+        <Notes
+          key={noteItem._id}
+          id={noteItem._id}
+          title={noteItem.title}
+          content={noteItem.content}
+          onDelete={handleDelete}
+        />
+      ))}
 
       <Footer />
     </div>
