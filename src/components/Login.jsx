@@ -12,6 +12,7 @@ function Login() {
 
   const [message, setMessage] = useState("");
   const [isError, setIsError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   function handleChange(e) {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -19,22 +20,29 @@ function Login() {
 
   async function handleLogin() {
     try {
-      const res = await axios.post("https://notesapp-2kp0.onrender.com/login", user);
+      setLoading(true);
+
+      const res = await axios.post("http://localhost:3000/login", user);
 
       if (res.data.success) {
         setIsError(false);
+
         setMessage("Login successful");
 
-        localStorage.setItem("userId", res.data.user._id); 
+        localStorage.setItem("token", res.data.token);
 
         setTimeout(() => navigate("/notes"), 1000);
       } else {
         setIsError(true);
+
         setMessage(res.data.message || "Login failed");
       }
     } catch (err) {
       setIsError(true);
+
       setMessage("Server error");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -58,7 +66,7 @@ function Login() {
       />
 
       <button onClick={handleLogin} className="login-btn">
-        Login
+        {loading ? "Please wait..." : "Login"}
       </button>
 
       <button className="back-btn" onClick={() => navigate("/")}>
