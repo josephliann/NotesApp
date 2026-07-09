@@ -1,14 +1,24 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 function Header() {
+  function logout() {
+    localStorage.removeItem("token");
+
+    localStorage.removeItem("userId");
+
+    window.location.href = "/";
+  }
+
   return (
     <div className="heading">
       <h1 className="heading-text">NotesApp</h1>
-      <Link to="/">
-        <button className="logout-btn">Logout</button>
-      </Link>
+
+      <button className="logout-btn" onClick={logout}>
+        Logout
+      </button>
     </div>
   );
 }
+
 export default Header;
+
