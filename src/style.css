@@ -44,12 +44,12 @@ body {
   background-color: #b71c1c;
 }
 .footer {
-  position: fixed; 
+  position: fixed; /* 🔥 change this */
   bottom: 0;
   width: 100%;
   text-align: center;
   padding: 10px;
-  background: #eee; 
+  background: #eee; /* important so it's visible */
   color: #aaa;
 }
 .footer-text {
@@ -81,6 +81,17 @@ body {
   margin-top: 30px;
 }
 
+.note-form {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 800px;
+  height: 200px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+}
+
 .note-form input {
   border: none;
   outline: none;
@@ -88,16 +99,12 @@ body {
   margin-bottom: 15px;
 }
 
-.note-form {
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  width: 800px;
-  height: auto;
-  min-height: 200px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  display: flex;
-  flex-direction: column;
+.note-form textarea {
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 15px;
+  margin-bottom: 60px;
 }
 
 .note-form button {
@@ -135,7 +142,7 @@ body {
 /* Content */
 .note p {
   font-size: 14px;
-  margin-bottom: 25px; 
+  margin-bottom: 25px; /* space for button */
 }
 
 /* Delete button inside */
@@ -158,8 +165,8 @@ body {
 }
 .notes-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 15px; 
+  flex-wrap: wrap; /* allows next row if space ends */
+  gap: 15px; /* spacing between notes */
   padding: 20px;
 }
 
@@ -372,4 +379,6 @@ body {
 .back-btn:hover {
   background-color: #c62828;
 }
+
+
 
